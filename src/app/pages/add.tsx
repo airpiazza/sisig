@@ -1,12 +1,10 @@
-export const Add = () => {
-  return <><div>
-  <label  htmlFor="item-name">
-    What ingredient would you like to add?
-  </label>
-  <input  id="item-name" name="itemName" type="text" />
-</div>
-<button type="submit" data-module="govuk-button">
-  Save and continue
-</button>
-</>
-};
+import { addTodo } from "./functions";
+
+export default function Add() {
+  return (
+    <form action={addTodo}>
+      <input type="text" name="item" />
+      <button type="submit">Add</button>
+    </form>
+  );
+}

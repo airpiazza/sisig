@@ -4,8 +4,8 @@ import { defineApp } from "rwsdk/worker";
 import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
 import { Home } from "@/app/pages/home";
-import { Add } from "@/app/pages/add";
 import { Dashboard } from "./app/pages/dashboard";
+import Add from "./app/pages/add";
 
 export type AppContext = {};
 
