@@ -3,10 +3,9 @@ import { defineApp } from "rwsdk/worker";
 
 import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
-import { Home } from "@/app/pages/home";
-import { Dashboard } from "./app/pages/dashboard";
 import Add from "./app/pages/add";
-import { addTodo } from "./app/pages/functions";
+import { addItem } from "./app/pages/functions";
+import Home from "./app/pages/home";
 
 export type AppContext = {};
 
@@ -21,15 +20,14 @@ export default defineApp([
     ctx;
   },
   render(Document, [
-    route("/items", {
-      get: () => Home(),
+    route("/items", Home),
+    route("/add", {
+      get: () => <Add />,
       post: async ({ request }) => {
         const formData = await request.formData();
-        await addTodo(formData);
+        await addItem(formData);
         return new Response(null, { status: 302, headers: { Location: "/items" } });
       }
-    }),
-    route("/add", Add),
-    route("/dashboard", ({ ctx }) => Dashboard({ ctx }))
+    })
   ]),
 ]);

@@ -5,7 +5,7 @@ import { sql } from 'drizzle-orm';
 
 export const items = sqliteTable('items', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
-  item: text('item').notNull(),
+  name: text('name').notNull(),
   gathered: integer({ mode: 'boolean' }).default(false),
   createdAt: text('created_at').notNull().default(sql`(datetime('now', 'localtime'))`),
   updatedAt: text('updated_at').notNull().default(sql`(datetime('now', 'localtime'))`),
