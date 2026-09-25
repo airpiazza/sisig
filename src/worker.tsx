@@ -6,6 +6,7 @@ import { setCommonHeaders } from "@/app/headers";
 import { Home } from "@/app/pages/home";
 import { Dashboard } from "./app/pages/dashboard";
 import Add from "./app/pages/add";
+import { addTodo } from "./app/pages/functions";
 
 export type AppContext = {};
 
@@ -20,7 +21,14 @@ export default defineApp([
     ctx;
   },
   render(Document, [
-    route("/", Home),
+    route("/items", {
+      get: () => Home(),
+      post: async ({ request }) => {
+        const formData = await request.formData();
+        await addTodo(formData);
+        return new Response(null, { status: 302, headers: { Location: "/items" } });
+      }
+    }),
     route("/add", Add),
     route("/dashboard", ({ ctx }) => Dashboard({ ctx }))
   ]),
