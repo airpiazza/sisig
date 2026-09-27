@@ -5,7 +5,15 @@ import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
 import { addItem } from "./app/pages/functions";
-import Home from "./app/pages/home";
+import Items from "./app/pages/items";
+
+import { env } from "cloudflare:workers";
+import {
+  SyncedStateServer,
+  syncedStateRoutes,
+} from "rwsdk/use-synced-state/worker";
+
+export { SyncedStateServer };
 
 export type AppContext = {};
 
@@ -20,7 +28,7 @@ export default defineApp([
     ctx;
   },
   render(Document, [
-    route("/items", Home),
+    route("/items", Items),
     route("/add", {
       get: () => <Add />,
       post: async ({ request }) => {
@@ -30,4 +38,5 @@ export default defineApp([
       }
     })
   ]),
+  ...syncedStateRoutes(() => env.SYNCED_STATE_SERVER),
 ]);

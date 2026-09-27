@@ -34,5 +34,19 @@
       "database_id": "73bdf696-6433-4128-a3b1-1d589b1a323a",
       "migrations_dir": "drizzle"
     }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SYNCED_STATE_SERVER",
+        "class_name": "SyncedStateServer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["SyncedStateServer"]
+    }
   ]
 }
