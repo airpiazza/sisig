@@ -3,7 +3,7 @@ export default function Add() {
     <>
     <a href="/items">Back</a>
     <form action="/items/add" method="post">
-      <input type="text" name="name" />
+      <input autoFocus type="text" name="name" />
       <button type="submit">Add</button>
     </form>
     </>

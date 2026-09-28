@@ -6,7 +6,7 @@ export default async function Edit({ id }: { id: string }) {
     <>
     <a href="/items">Back</a>
       <form action={`/items/${id}/edit`} method="post">
-        <input type="text" name="name" defaultValue={item?.name ?? ""} />
+        <input autoFocus type="text" name="name" defaultValue={item?.name ?? ""} />
         <button type="submit">Save</button>
       </form>
       <form action={`/items/${id}/delete`} method="post">
