@@ -3,7 +3,7 @@
 import { Item } from "@/db/schema";
 import { useCallback, useEffect } from "react";
 import { getItems, editItemGathered } from "../server/functions";
-import ItemRow from "../components/ItemRow";
+import ItemRow from "../components/itemRow";
 
 import { useSyncedState } from "rwsdk/use-synced-state/client";
 

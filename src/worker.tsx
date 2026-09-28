@@ -1,7 +1,8 @@
-import { render, route } from "rwsdk/router";
+import { render, route, prefix } from "rwsdk/router";
 import { defineApp } from "rwsdk/worker";
 
-import { Document } from "@/app/document";
+import { RealtimeDocument } from "@/app/documents/realtimeDocument";
+import { StaticDocument } from "@/app/documents/staticDocument";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
 import Edit from "./app/pages/edit";
@@ -28,30 +29,34 @@ export default defineApp([
     // setup ctx here
     ctx;
   },
-  render(Document, [
-    route("/items", Items),
-    route("/items/add", {
-      get: () => <Add />,
-      post: async ({ request }) => {
-        const formData = await request.formData();
-        await addItem(formData);
-        return new Response(null, { status: 302, headers: { Location: "/items" } });
-      }
-    }),
-    route("/items/:id/edit", {
-      get: ({ params }) => <Edit id={params.id} />,
-      post: async ({ request, params }) => {
-        const formData = await request.formData();
-        await editItem(params.id, formData);
-        return new Response(null, { status: 302, headers: { Location: "/items" } });
-      }
-    }),
-    route("/items/:id/delete", {
-      post: async ({ params }) => {
-        await deleteItem(params.id);
-        return new Response(null, { status: 302, headers: { Location: "/items" } });
-      }
-    })
+  render(RealtimeDocument, [
+    route("/items", Items)
   ]),
+  render(StaticDocument, [
+    prefix("/items", [
+      route("/add", {
+        get: () => <Add />,
+        post: async ({ request }) => {
+          const formData = await request.formData();
+          await addItem(formData);
+          return new Response(null, { status: 302, headers: { Location: "/items" } });
+        },
+      }),
+      route("/:id/edit", {
+        get: ({ params }) => <Edit id={params.id} />,
+        post: async ({ request, params }) => {
+          const formData = await request.formData();
+          await editItem(params.id, formData);
+          return new Response(null, { status: 302, headers: { Location: "/items" } });
+        },
+      }),
+    ]),
+  ]),
+  route("items/:id/delete", {
+    post: async ({ params }) => {
+      await deleteItem(params.id);
+      return new Response(null, { status: 302, headers: { Location: "/items" } });
+    },
+  }),
   ...syncedStateRoutes(() => env.SYNCED_STATE_SERVER),
 ]);
