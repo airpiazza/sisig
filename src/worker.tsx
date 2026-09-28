@@ -5,7 +5,7 @@ import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
 import Edit from "./app/pages/edit";
-import { addItem, editItem } from "./app/server/functions";
+import { addItem, editItem, deleteItem } from "./app/server/functions";
 import Items from "./app/pages/items";
 
 import { env } from "cloudflare:workers";
@@ -43,6 +43,12 @@ export default defineApp([
       post: async ({ request, params }) => {
         const formData = await request.formData();
         await editItem(params.id, formData);
+        return new Response(null, { status: 302, headers: { Location: "/items" } });
+      }
+    }),
+    route("/items/:id/delete", {
+      post: async ({ params }) => {
+        await deleteItem(params.id);
         return new Response(null, { status: 302, headers: { Location: "/items" } });
       }
     })
