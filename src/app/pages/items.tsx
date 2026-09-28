@@ -1,8 +1,9 @@
 "use client";
 
-import { Item, items } from "@/db/schema";
-import { useEffect } from "react";
-import { getItems, updateItem } from "./functions";
+import { Item } from "@/db/schema";
+import { useCallback, useEffect } from "react";
+import { getItems, updateItem } from "../server/functions";
+import ItemRow from "../components/ItemRow";
 
 import { useSyncedState } from "rwsdk/use-synced-state/client";
 
@@ -18,25 +19,22 @@ export default function Items() {
     fetchData();
   }, []);
 
+  const handleGatheredChange = useCallback((itemId: Item["id"], gathered: boolean) => {
+    setItemsList((prev) =>
+      prev.map((i) => (i.id === itemId ? { ...i, gathered } : i))
+    );
+    
+    updateItem(itemId, gathered).catch(() => {
+      setItemsList((prev) =>
+        prev.map((i) => (i.id === itemId ? { ...i, gathered: !gathered } : i))
+      );
+    });
+  }, [setItemsList]);
+
   return <>
     <a href="/add">Add Item</a>
     {itemsList.map((item) => (
-      <div key={item.id}>
-        <input id={`${item.id}`} checked={item.gathered ?? false} type="checkbox" onChange={(e) => {
-          const updatedItems = itemsList.map((i) => {
-            if (i.id === item.id) {
-              updateItem(i.id, e.target.checked);
-              return { ...i, gathered: e.target.checked };
-            }
-            return i;
-          });
-          setItemsList(updatedItems);
-
-        }} />
-        <label htmlFor={`${item.id}`}>
-          {item.name}
-        </label>
-      </div>
+      <ItemRow key={item.id} item={item} onGatheredChange={handleGatheredChange} />
     ))}
       </>;
 };

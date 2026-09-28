@@ -4,7 +4,7 @@ import { defineApp } from "rwsdk/worker";
 import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
-import { addItem } from "./app/pages/functions";
+import { addItem } from "./app/server/functions";
 import Items from "./app/pages/items";
 
 import { env } from "cloudflare:workers";
