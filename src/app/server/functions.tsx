@@ -16,6 +16,20 @@ export async function getItems() {
   return allItems;
 }
 
-export async function updateItem(id: number, gathered: boolean) {
+export async function getItemById(id: number) {
+  const item = await db.select().from(items).where(eq(items.id, id)).get();
+  return item;
+}
+
+export async function editItem(id: string, formData: FormData) {
+  const name = formData.get("name")?.toString() || "";
+  await db.update(items).set({ name }).where(eq(items.id, parseInt(id))).run();
+}
+
+export async function deleteItem(id: string) {
+  await db.delete(items).where(eq(items.id, parseInt(id))).run();
+}
+
+export async function editItemGathered(id: number, gathered: boolean) {
   await db.update(items).set({ gathered }).where(eq(items.id, id)).run();
 }

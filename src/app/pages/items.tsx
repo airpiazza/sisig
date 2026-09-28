@@ -2,7 +2,7 @@
 
 import { Item } from "@/db/schema";
 import { useCallback, useEffect } from "react";
-import { getItems, updateItem } from "../server/functions";
+import { getItems, editItemGathered } from "../server/functions";
 import ItemRow from "../components/ItemRow";
 
 import { useSyncedState } from "rwsdk/use-synced-state/client";
@@ -24,7 +24,7 @@ export default function Items() {
       prev.map((i) => (i.id === itemId ? { ...i, gathered } : i))
     );
     
-    updateItem(itemId, gathered).catch(() => {
+    editItemGathered(itemId, gathered).catch(() => {
       setItemsList((prev) =>
         prev.map((i) => (i.id === itemId ? { ...i, gathered: !gathered } : i))
       );
@@ -32,7 +32,7 @@ export default function Items() {
   }, [setItemsList]);
 
   return <>
-    <a href="/add">Add Item</a>
+    <a href="/items/add">Add Item</a>
     {itemsList.map((item) => (
       <ItemRow key={item.id} item={item} onGatheredChange={handleGatheredChange} />
     ))}

@@ -1,7 +1,7 @@
 export default function Add() {
   return (
-    <form action="/add" method="post">
-      <input type="text" name="item" />
+    <form action="/items/add" method="post">
+      <input type="text" name="name" />
       <button type="submit">Add</button>
     </form>
   );

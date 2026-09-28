@@ -4,7 +4,8 @@ import { defineApp } from "rwsdk/worker";
 import { Document } from "@/app/document";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
-import { addItem } from "./app/server/functions";
+import Edit from "./app/pages/edit";
+import { addItem, editItem } from "./app/server/functions";
 import Items from "./app/pages/items";
 
 import { env } from "cloudflare:workers";
@@ -29,11 +30,19 @@ export default defineApp([
   },
   render(Document, [
     route("/items", Items),
-    route("/add", {
+    route("/items/add", {
       get: () => <Add />,
       post: async ({ request }) => {
         const formData = await request.formData();
         await addItem(formData);
+        return new Response(null, { status: 302, headers: { Location: "/items" } });
+      }
+    }),
+    route("/items/:id/edit", {
+      get: ({ params }) => <Edit id={params.id} />,
+      post: async ({ request, params }) => {
+        const formData = await request.formData();
+        await editItem(params.id, formData);
         return new Response(null, { status: 302, headers: { Location: "/items" } });
       }
     })

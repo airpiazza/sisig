@@ -18,6 +18,7 @@ function ItemRow({ item, onGatheredChange }: ItemRowProps) {
       <label htmlFor={`item-${item.id}`}>
         {item.name}
       </label>
+      <a href={`/items/${item.id}/edit`}>Edit</a>
     </div>
   );
 }
