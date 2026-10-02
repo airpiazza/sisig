@@ -15,9 +15,17 @@ import {
   syncedStateRoutes,
 } from "rwsdk/use-synced-state/worker";
 
-export { SyncedStateServer };
+import { authRoutes } from "@/passkey/routes";
+import { setupPasskeyAuth } from "@/passkey/setup";
+import { Session } from "@/session/durableObject";
 
-export type AppContext = {};
+export { SyncedStateServer };
+export { SessionDurableObject } from "@/session/durableObject";
+export { PasskeyDurableObject } from "@/passkey/durableObject";
+
+export type AppContext = {
+  session: Session | null;
+};
 
 export interface Env {
   items: D1Database;
@@ -25,12 +33,14 @@ export interface Env {
 
 export default defineApp([
   setCommonHeaders(),
+  setupPasskeyAuth(),
   ({ ctx }) => {
     // setup ctx here
     ctx;
   },
   render(RealtimeDocument, [
-    route("/items", Items)
+    route("/items", Items),
+    prefix("/auth", authRoutes()),
   ]),
   render(StaticDocument, [
     prefix("/items", [
