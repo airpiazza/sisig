@@ -178,5 +178,6 @@ export async function finishPasskeyLogin(login: AuthenticationResponseJSON) {
     challenge: null,
   });
 
-  return true;
+  // rwsdk's client follows redirect responses returned from server functions
+  return new Response(null, { status: 302, headers: { Location: "/items" } });
 }

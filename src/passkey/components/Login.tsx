@@ -26,12 +26,11 @@ export function Login() {
       const login = await startAuthentication({ optionsJSON: options });
 
       // 3. Give the signed challenge to the worker to finish the login process
+      // On success the worker responds with a redirect to /items
       const success = await finishPasskeyLogin(login);
 
-      if (!success) {
+      if (success === false) {
         setResult("Login failed");
-      } else {
-        setResult("Login successful!");
       }
     } catch (error: unknown) {
       setResult(
