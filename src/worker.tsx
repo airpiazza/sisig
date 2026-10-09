@@ -49,6 +49,7 @@ export default defineApp([
   },
   render(RealtimeDocument, [prefix("/auth", authRoutes())]),
   requireAuth,
+  route("/", () => new Response(null, { status: 302, headers: { Location: "/items" } })),
   render(RealtimeDocument, [route("/items", Items)]),
   render(StaticDocument, [
     prefix("/items", [
