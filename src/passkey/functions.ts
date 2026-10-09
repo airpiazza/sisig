@@ -12,12 +12,20 @@ import { sessions } from "@/session/store";
 import { env } from "cloudflare:workers";
 import { requestInfo } from "rwsdk/worker";
 import {
+  MAX_USERS,
+  countUsers,
   createCredential,
   createUser,
   getCredentialById,
   getUserById,
   updateCredentialCounter,
 } from "./db";
+
+// Comma-separated list from the ALLOWED_USERNAMES secret. Unset means nobody can sign up.
+function isAllowedUsername(username: string) {
+  const allowed = (env.ALLOWED_USERNAMES ?? "").split(",");
+  return allowed.includes(username);
+}
 
 function getWebAuthnConfig(request: Request) {
   const rpID = env.WEBAUTHN_RP_ID ?? new URL(request.url).hostname;
@@ -31,6 +39,13 @@ function getWebAuthnConfig(request: Request) {
 }
 
 export async function startPasskeyRegistration(username: string) {
+  if (!isAllowedUsername(username)) {
+    return { error: "Sorry, that username isn't allowed to sign up." };
+  }
+  if ((await countUsers()) >= MAX_USERS) {
+    return { error: "Sign ups are closed." };
+  }
+
   const { rpName, rpID } = getWebAuthnConfig(requestInfo.request);
   const { response } = requestInfo;
 
@@ -70,8 +85,16 @@ export async function finishPasskeyRegistration(
   username: string,
   registration: RegistrationResponseJSON,
 ) {
+  if (!isAllowedUsername(username)) {
+    return false;
+  }
+
   const { request, response } = requestInfo;
   const { origin } = new URL(request.url);
+
+  if ((await countUsers()) >= MAX_USERS) {
+    return false;
+  }
 
   const session = await sessions.load(request);
   const challenge = session?.challenge;

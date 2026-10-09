@@ -51,6 +51,10 @@ export function Login() {
     try {
       // 1. Get a challenge from the worker
       const options = await startPasskeyRegistration(username);
+      if ("error" in options) {
+        setResult(options.error);
+        return;
+      }
       // 2. Ask the browser to sign the challenge
       const registration = await startRegistration({ optionsJSON: options });
 

@@ -15,6 +15,16 @@ export const db = createDb<PasskeyDatabase>(
   "passkey-main",
 );
 
+export const MAX_USERS = 2;
+
+export async function countUsers(): Promise<number> {
+  const row = await db
+    .selectFrom("users")
+    .select((eb) => eb.fn.countAll<number>().as("count"))
+    .executeTakeFirst();
+  return Number(row?.count ?? 0);
+}
+
 export async function createUser(username: string): Promise<User> {
   const user: User = {
     id: crypto.randomUUID(),
