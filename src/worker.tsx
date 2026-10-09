@@ -1,4 +1,4 @@
-import { render, route, prefix } from "rwsdk/router";
+import { render, route, prefix, type RouteMiddleware } from "rwsdk/router";
 import { defineApp } from "rwsdk/worker";
 
 import { RealtimeDocument } from "@/app/documents/realtimeDocument";
@@ -31,6 +31,15 @@ export interface Env {
   items: D1Database;
 }
 
+const requireAuth: RouteMiddleware = ({ ctx }) => {
+  if (!ctx.session?.userId) {
+    return new Response(null, {
+      status: 302,
+      headers: { Location: "/auth/login" },
+    });
+  }
+};
+
 export default defineApp([
   setCommonHeaders(),
   setupPasskeyAuth(),
@@ -38,10 +47,9 @@ export default defineApp([
     // setup ctx here
     ctx;
   },
-  render(RealtimeDocument, [
-    route("/items", Items),
-    prefix("/auth", authRoutes()),
-  ]),
+  render(RealtimeDocument, [prefix("/auth", authRoutes())]),
+  requireAuth,
+  render(RealtimeDocument, [route("/items", Items)]),
   render(StaticDocument, [
     prefix("/items", [
       route("/add", {
