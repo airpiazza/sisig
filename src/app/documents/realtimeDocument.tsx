@@ -1,3 +1,5 @@
+import styles from "../styles.css?url";
+
 export const RealtimeDocument: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => (
@@ -7,6 +9,7 @@ export const RealtimeDocument: React.FC<{ children: React.ReactNode }> = ({
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Sisig</title>
       <link rel="modulepreload" href="/src/client.tsx" />
+      <link rel="stylesheet" href={styles} />
     </head>
     <body>
       {children}

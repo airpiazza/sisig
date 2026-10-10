@@ -1,3 +1,5 @@
+import styles from "../styles.css?url";
+
 export const StaticDocument: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => (
@@ -6,6 +8,7 @@ export const StaticDocument: React.FC<{ children: React.ReactNode }> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Sisig</title>
+      <link rel="stylesheet" href={styles} />
     </head>
     <body>
       {children}

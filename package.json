@@ -27,12 +27,14 @@
   "dependencies": {
     "@simplewebauthn/browser": "13.3.0",
     "@simplewebauthn/server": "13.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "capnweb": "^0.10.0",
     "drizzle-orm": "^0.45.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-server-dom-webpack": "19.2.8",
-    "rwsdk": "1.7.4"
+    "rwsdk": "1.7.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.50.0",
