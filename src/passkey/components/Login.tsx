@@ -89,6 +89,7 @@ export function Login() {
 
   return (
     <>
+      <img src="/sisig-logo.svg" alt="" />
       <input
         type="text"
         value={username}
