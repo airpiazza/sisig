@@ -10,4 +10,11 @@
 
 @theme {
   --font-sans: "First Try", ui-sans-serif, system-ui, sans-serif;
+  --color-base: #656363;
+}
+
+@layer base {
+  html {
+    color: var(--color-base);
+  }
 }

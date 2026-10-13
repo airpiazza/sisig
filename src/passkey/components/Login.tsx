@@ -103,7 +103,7 @@ export function Login() {
       <button
         onClick={handlePerformPasskeyLogin}
         disabled={isPending}
-        className="bg-[url('/src/app/assets/login-button.svg')] flex aspect-[564/190.5] w-48 items-center justify-center border-0 bg-transparent bg-[length:100%_100%] bg-no-repeat sm:w-64"
+        className="text-3xl bg-[url('/src/app/assets/login-button.svg')] flex aspect-[564/190.5] w-48 items-center justify-center border-0 bg-transparent bg-[length:100%_100%] bg-no-repeat sm:w-64"
       >
         {isPending ? <>...</> : "Login with passkey"}
       </button>
