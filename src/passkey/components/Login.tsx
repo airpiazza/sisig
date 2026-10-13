@@ -88,7 +88,7 @@ export function Login() {
   };
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-4">
       <img
         src="/sisig-logo.svg"
         alt=""
@@ -107,6 +107,6 @@ export function Login() {
         {isPending ? <>...</> : "Register with passkey"}
       </button>
       {result && <div>{result}</div>}
-    </>
+    </div>
   );
 }
