@@ -1,20 +1,2 @@
 @import "tailwindcss";
-
-@font-face {
-  font-family: "First Try";
-  src: url("./assets/FirstTry-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@theme {
-  --font-sans: "First Try", ui-sans-serif, system-ui, sans-serif;
-  --color-base: #656363;
-}
-
-@layer base {
-  html {
-    color: var(--color-base);
-  }
-}
+@import "../design-system/tokens.css";

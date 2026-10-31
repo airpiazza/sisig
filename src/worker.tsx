@@ -5,6 +5,7 @@ import { RealtimeDocument } from "@/app/documents/realtimeDocument";
 import { StaticDocument } from "@/app/documents/staticDocument";
 import { setCommonHeaders } from "@/app/headers";
 import Add from "./app/pages/add";
+import DesignSystem from "./app/pages/designSystem";
 import Edit from "./app/pages/edit";
 import { addItem, editItem, deleteItem } from "./app/server/functions";
 import Items from "./app/pages/items";
@@ -48,6 +49,7 @@ export default defineApp([
     ctx;
   },
   render(RealtimeDocument, [prefix("/auth", authRoutes())]),
+  render(StaticDocument, [route("/design-system", DesignSystem)]),
   requireAuth,
   route("/", () => new Response(null, { status: 302, headers: { Location: "/items" } })),
   render(RealtimeDocument, [route("/items", Items)]),

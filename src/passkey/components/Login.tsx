@@ -5,6 +5,7 @@ import {
   startRegistration,
 } from "@simplewebauthn/browser";
 import { useState, useTransition } from "react";
+import { Button, Logo } from "@/design-system";
 import {
   finishPasskeyLogin,
   finishPasskeyRegistration,
@@ -89,27 +90,19 @@ export function Login() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-4">
-      <img
-        src="/sisig-logo.svg"
-        alt=""
-        className="mx-auto block h-auto w-full max-w-48 sm:max-w-64 md:max-w-80"
-      />
+      <Logo />
       <input
         type="text"
         value={username}
         onChange={handleUsernameChange}
         placeholder="Username"
       />
-      <button
-        onClick={handlePerformPasskeyLogin}
-        disabled={isPending}
-        className="text-3xl bg-[url('/src/app/assets/login-button.svg')] flex aspect-[564/190.5] w-48 items-center justify-center border-0 bg-transparent bg-[length:100%_100%] bg-no-repeat sm:w-64"
-      >
-        {isPending ? <>...</> : "Login with passkey"}
-      </button>
-      <button onClick={handlePerformPasskeyRegister} disabled={isPending}>
-        {isPending ? <>...</> : "Register with passkey"}
-      </button>
+      <Button onClick={handlePerformPasskeyLogin} isLoading={isPending}>
+        Login with passkey
+      </Button>
+      <Button onClick={handlePerformPasskeyRegister} isLoading={isPending}>
+        Register with passkey
+      </Button>
       {result && <div>{result}</div>}
     </div>
   );
