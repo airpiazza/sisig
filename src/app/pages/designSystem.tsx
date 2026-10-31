@@ -1,4 +1,4 @@
-import { Button, Logo } from "@/design-system";
+import { Button, Icon, Logo } from "@/design-system";
 
 export default function DesignSystem() {
   return (
@@ -20,6 +20,21 @@ export default function DesignSystem() {
         <h2 className="text-3xl">Button</h2>
         <Button>Login with passkey</Button>
         <Button isLoading>Login with passkey</Button>
+        <Button variant="text-icon" icon="faceId">
+          Login with passkey
+        </Button>
+        <Button variant="text-icon" icon="faceId" isLoading>
+          Login with passkey
+        </Button>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-3xl">Icon</h2>
+        <div className="flex items-center gap-4">
+          <Icon name="faceId" size="sm" />
+          <Icon name="faceId" size="md" />
+          <Icon name="faceId" size="lg" />
+        </div>
       </section>
 
       <section className="flex flex-col gap-4">

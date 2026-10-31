@@ -97,10 +97,20 @@ export function Login() {
         onChange={handleUsernameChange}
         placeholder="Username"
       />
-      <Button onClick={handlePerformPasskeyLogin} isLoading={isPending}>
+      <Button
+        variant="text-icon"
+        icon="faceId"
+        onClick={handlePerformPasskeyLogin}
+        isLoading={isPending}
+      >
         Login with passkey
       </Button>
-      <Button onClick={handlePerformPasskeyRegister} isLoading={isPending}>
+      <Button
+        variant="text-icon"
+        icon="faceId"
+        onClick={handlePerformPasskeyRegister}
+        isLoading={isPending}
+      >
         Register with passkey
       </Button>
       {result && <div>{result}</div>}
